@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="page-header">Cursos Disponibles</h2>
+            <table class="table table-striped" id="coursetab"> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Curso</th> 
+                        <th>Facilitador</th> 
+                        <th>Fecha de Inicio</th>
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    {% if cursos|length <= 0 %}
+                    NO HAY
+                    {% endif %}
+                    {% for data in cursos %}
+                    <tr> 
+                        <th scope="row">{{data.id}}</th> 
+                        <td>{{data.name}}</td> 
+                        <td>{{data.facilitador}}</td> 
+                        <td>{{data.startdate|date('F j, Y, g:i a')}}</td> 
+                    </tr>
+                    {% endfor %}
+                </tbody> 
+            </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Facilitador</th>
+                <th>Startdate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for curso in cursos %}
+            <tr>
+                <td><a href="{{ path('cursos_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
+                <td>{{ curso.name }}</td>
+                <td>{{ curso.facilitador }}</td>
+                <td>{% if curso.startdate %}{{ curso.startdate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('cursos_show', { 'id': curso.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cursos_edit', { 'id': curso.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cursos_new') }}">Create a new curso</a>
+        </li>
+    </ul> -->
+{% endblock %}

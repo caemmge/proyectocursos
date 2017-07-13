@@ -1,0 +1,51 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div class="alert alert-danger alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    </div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {% endif %}
+    <fieldset>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <h2>Inicie Sesi&oacute;n</h2>
+                <hr class="colorgraph">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <input class="form-control input-lg" placeholder ="{{ 'security.login.username'|trans }}" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <input class="form-control input-lg" placeholder ="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
+                        </div>
+                    </div>
+                </div>
+                <span class="button-checkbox">
+                    <button type="button" class="btn" data-color="info"> {{ 'security.login.remember_me'|trans }}</button>
+                    <input type="checkbox" name="_remember_me" id="remember_me" checked="checked" class="hidden">                  
+                    <!--<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>-->
+                </span>
+                <hr class="colorgraph">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <input class="btn btn-success btn-block btn-lg" tabindex="7" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary btn-block btn-lg">Registrarse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+        <h1>Seleccione los Cursos que desea Inscribir</h1>
+            <hr class="colorgraph">
+                <!-- Default panel contents -->
+                <div class="col-xs-8 col-sm-offset-2" >
+                    <ul class="list-group">
+                        {{ form_start(form) }}
+                        {% for curso in form.cursos %}
+                            <li class="list-group-item">
+                                {{ form_label(curso) }}
+                                <div class="material-switch pull-right">
+                                        {{ form_widget(curso) }}
+                                </div>
+                            </li>                
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <hr class="colorgraph">
+                    </div>
+                    <div class="col-xs-6" >
+                        <input class="btn btn-primary btn-block btn-lg" tabindex="7" type="submit" value="Registrar" />
+                    </div>
+                     {{ form_end(form) }}
+                    <div class="col-xs-6">
+                        <a href="{{ path('cursos_index') }}" class="btn btn-success btn-block btn-lg" >Regresar</a>
+                    </div>
+                </div>         
+        </div>
+    </div>
+</div>
+{% endblock %}

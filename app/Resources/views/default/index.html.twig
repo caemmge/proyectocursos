@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if is_granted('ROLE_USER') %}
+<div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+    <h2 class="page-header">Cursos Disponibles</h2>
+    <table class="table table-striped" id="coursetab"> 
+        <thead> 
+            <tr> 
+                        <th>#</th> 
+                        <th>Curso</th> 
+                        <th>Facilitador</th> 
+                        <th>Fecha de Inicio</th>
+            </tr> 
+        </thead> 
+        <tbody> 
+        {% for data in cursos %}
+            <tr> 
+                <th scope="row">{{data.id}}</th> 
+                <td>{{data.name}}</td> 
+                <td>{{data.facilitador}}</td> 
+                <td>{{ data.startdate|date('F j, Y, g:i a') }}</td> 
+            </tr>
+        {% endfor %}
+        </tbody> 
+    </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Bienvenido</h1>
+                <h1>Registrese o inicie Sesion para visualizar los Cursos disponibles</h1>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{% block title %}Cursos{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ absolute_url(asset('css/bootstrap.min.css')) }}" rel="stylesheet">
+    <link href="{{ absolute_url(asset('js/Dt/media/css/jquery.dataTables.css')) }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('favicon.ico')) }}" />
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            {% if is_granted('ROLE_USER') %}
+            <span class="icon-bar">Cursos</span>
+            {% endif %}
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Inicio</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          {% if is_granted('ROLE_USER') %}
+            <li><a href="/cursos/new">Inscribir</a></li>
+            <li><a href="/persona/{{ app.user.id }}">Datos Personales</a></li>
+          {% endif %}
+          </ul>
+          {% if is_granted('ROLE_USER') %}
+            <div class="navbar-form navbar-right">
+              <a class="btn btn-success" href="{{ path('fos_user_security_logout') }}">Salir</a>
+            </div>
+          {% else %}
+            <form class="navbar-form navbar-right">
+              <a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Log In</a>
+              <a class="btn btn-primary" href="{{ path('fos_user_registration_register') }}">Registrar</a>
+            </form>
+          {% endif %}
+          
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    </div><br/><br/><br/>
+
+    <div class="main-content">
+      {% block body %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="{{ absolute_url(asset('js/jquery.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('js/bootstrap.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('js/Dt/media/js/jquery.dataTables.js')) }}"></script>
+    {% block javascripts %}{% endblock %}
+    <script>
+      $(document).ready( function () {
+        $('#coursetab').DataTable();
+      } );
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="page-header">Cursos Inscritos</h2>
+            <table class="table table-striped" id="coursetab"> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Curso</th> 
+                        <th>Facilitador</th> 
+                        <th>Fecha de Inicio</th>
+                        <th></th> 
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    {% for data in cursos %}
+                    <tr> 
+                        <th scope="row">{{data.id}}</th> 
+                        <td>{{data.name}}</td> 
+                        <td>{{data.facilitador}}</td> 
+                        <td>{{data.start_date|date('F j, Y, g:i a')}}</td> 
+                        <td>
+                        <a href="{{ path('cursos_delete', { 'id': data.id }) }}" class="btn btn-danger btn-sm">Remover</a>
+                        </td>  
+                    </tr>
+                    {% endfor %}
+                </tbody> 
+            </table>
+            <a href="{{ path('pdf_show') }}" class="btn btn-primary btn-sm">Exportar</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
