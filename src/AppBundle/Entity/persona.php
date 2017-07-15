@@ -77,6 +77,11 @@ class persona
     private $cursos;
 
     /**
+     * @var AppBundle\Entity\telefono
+     */
+    protected $telefono;
+
+    /**
      * Constructor
      */
 
@@ -169,6 +174,16 @@ class persona
         }
         $this->cursos->removeElement($curs);
         $curs->removePersona($this);
+    }
+
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(telefono $phone = null)
+    {
+        $this->telefono = $phone;
     }
 
     public function __toString()

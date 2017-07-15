@@ -35,4 +35,3 @@ security:
         - { path: ^/persona, role: ROLE_USER }
         - { path: ^/curso, role: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/BackEnd, role: ROLE_ADMIN }

@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Telefono creation</h1>
-
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('telefono_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <h2>Agregue un Numero de Telefono</h2>
+    <hr class="colorgraph">
+    <div class="row">
+        <div class="col-xs-12 ">
+            <div class="form-group">
+                {{ form_widget(form.phone) }}
+            </div>
+        </div>
+    </div>
+    <hr class="colorgraph">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <input class="btn btn-primary btn-block btn-lg" tabindex="7" type="submit" value="Guardar" />
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <a href="{{ path('persona_new') }}" class="btn btn-success btn-block btn-lg">Regresar</a>
+        </div>
+    </div>
+{{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

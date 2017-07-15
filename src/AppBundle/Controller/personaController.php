@@ -30,7 +30,7 @@ class personaController extends Controller
         # $personas = $em->getRepository('AppBundle:persona')->findAll();
 
         $personas = $em->getRepository('AppBundle:persona')
-            ->findOneBy(array('email' => $user)
+            ->findOneBy(array('usuario' => $user)
                    );
 
         if ($personas != "") {
@@ -53,16 +53,22 @@ class personaController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $personas = $em->getRepository('AppBundle:persona')
+            ->findOneBy(array('usuario' => $user->getId())
+                   );
         $persona = new Persona();
         $telefono = new telefono();
+
         $form = $this->createForm('AppBundle\Form\personaType', $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $telefono->setPhone($form['telefono']['phone']->getData());
             $telefono->setPersona($persona);
             $persona->setEmail($user->getEmail());
+            $persona->setUsuario($user);
             $em->persist($persona);
             $em->persist($telefono);
             $em->flush();
@@ -70,10 +76,15 @@ class personaController extends Controller
             return $this->redirectToRoute('persona_show', array('id' => $persona->getId()));
         }
 
-        return $this->render('persona/new.html.twig', array(
-            'persona' => $persona,
-            'form' => $form->createView(),
-        ));
+        if ($personas == "") {
+            return $this->render('persona/new.html.twig', array(
+                        'persona' => $persona,
+                        'form' => $form->createView(),
+            ));
+        } else {
+            return $this->redirectToRoute('persona_show', array('id' => $personas->getId()));
+        }
+
     }
 
     /**
@@ -85,11 +96,12 @@ class personaController extends Controller
     public function showAction(persona $persona)
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        $exist = $this->getDoctrine()
-        ->getRepository('AppBundle:persona')
-        ->find($user->getId());
+        $em = $this->getDoctrine()->getManager();
+        $personas = $em->getRepository('AppBundle:persona')
+            ->findOneBy(array('usuario' => $user->getId())
+                   );
 
-        if ($exist != "") {
+        if ($personas != "") {
             $deleteForm = $this->createDeleteForm($persona);
         
             $telefono = $this->getDoctrine()
@@ -119,16 +131,31 @@ class personaController extends Controller
     public function editAction(Request $request, persona $persona)
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        $exist = $this->getDoctrine()
-        ->getRepository('AppBundle:persona')
-        ->find($user->getId());
+        $em = $this->getDoctrine()->getManager();
+        $conn = $em->getConnection();
+        $personas = $em->getRepository('AppBundle:persona')
+            ->findOneBy(array('usuario' => $user->getId()));
 
-        if ($exist != "") {
+        $telefono = new telefono();
+
+        if ($personas != "") {
+            $telefonos = $em->getRepository('AppBundle:telefono')
+            ->findOneBy(array('persona' => $personas->getId()));
+            $telefono->setPhone($telefonos->getPhone());
+            $persona->setTelefono($telefono);
             $deleteForm = $this->createDeleteForm($persona);
             $editForm = $this->createForm('AppBundle\Form\personaType', $persona);
             $editForm->handleRequest($request);
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
+                
+                $phone = $form['telefono']['phone']->getData();
+                $conn->update('telefono', 't')
+                     ->set('t.phone', '?')
+                     ->where('t.usuario', '?')
+                     ->setParameter(0, $phone)
+                     ->setParameter(1, $personas->getId());
+
                 $this->getDoctrine()->getManager()->flush();
 
                 return $this->redirectToRoute('persona_show', array('id' => $persona->getId()));

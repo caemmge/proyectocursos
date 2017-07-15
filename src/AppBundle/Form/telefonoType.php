@@ -16,7 +16,8 @@ class telefonoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('phone', EntityType::class, array('class' => telefono::class, 'attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Telefono')));
+            #->add('phone', EntityType::class, array('class' => telefono::class, 'attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Telefono')));
+            ->add('phone', TextType::class, array('attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Telefono')));
     }
     
     /**

@@ -42,10 +42,10 @@ class telefono
     /**
      * @return string
      */
-     public function __toString()
-     {
-         return $this->persona;
-     }
+    public function __toString()
+    {
+        return $this->persona;
+    }
 
     public function getId()
     {

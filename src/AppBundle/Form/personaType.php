@@ -25,9 +25,7 @@ class personaType extends AbstractType
             ->add('birth',DateType::class, array('widget' => 'single_text',
                 'format' => 'yyyy-MM-dd','attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Nacimiento'),'label' => 'Nacimiento'))
             ->add('age',TextType::class, array('attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Edad'),'label' => 'age'))
-            ->add('phone', CollectionType::class, [
-                'entry_type' => telefonoType::class
-            ])
+            ->add('telefono', telefonoType::class)
             #->add('phone',TextType::class, array('mapped' => false, 'attr' =>array('class' => 'form-control input-lg', 'style' => 'margin-bottom: 15px', 'placeholder' => 'Telefono'),'label' => 'age'))
         ;
     }

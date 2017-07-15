@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\telefono;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Telefono controller.
@@ -39,16 +40,23 @@ class telefonoController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $personas = $em->getRepository('AppBundle:persona')
+            ->findOneBy(array('usuario' => $user)
+                   );
+
         $telefono = new Telefono();
         $form = $this->createForm('AppBundle\Form\telefonoType', $telefono);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
+            $telefono->setPersona($personas);
             $em->persist($telefono);
             $em->flush();
 
-            return $this->redirectToRoute('telefono_show', array('id' => $telefono->getId()));
+            return $this->redirectToRoute('persona_show', array('id' => $personas->getId()));
         }
 
         return $this->render('telefono/new.html.twig', array(

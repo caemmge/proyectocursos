@@ -1,6 +1,0 @@
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="person_id", type="integer")
-     */
-    private $personId;

@@ -69,7 +69,7 @@ class cursosController extends Controller
         $builder =$this->createFormBuilder();
 
         if (count($cursos) == 0) {
-            return $this->redirectToRoute('cursos_index');
+            return $this->redirectToRoute('cursos_show');
         }
 
         foreach ($cursos as $curso) {
